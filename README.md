@@ -40,10 +40,11 @@ Nightscout is still in development so there are some tricks needed because of de
 The following software was used to set up the local Nightscout server. All of the tools are free except for the Windows Server operating system.
 
 1. [Windows Server 2016](https://www.microsoft.com/en-us/cloud-platform/windows-server)
+1. [Visual Studio Express 2015 for Windows Desktop](https://my.visualstudio.com/Downloads?q=Visual%20Studio%20Express%202015%20for%20Windows%20Desktop)
 1. [MongoDB 4.0.0](https://www.mongodb.com/download-center?jmp=nav#community) for Windows Server 2008 R2 and later, with SSL support
 1. [Python 2.7.11](https://www.python.org/downloads/release/python-2711/)
 1. [Git for Windows 2.18.0](https://github.com/git-for-windows/git/releases/download/v2.18.0.windows.1/Git-2.18.0-64-bit.exe)
-1. [Node.js 8.11.3 LTS x64](https://nodejs.org/dist/v8.11.3/node-v8.11.3-x64.msi)
+1. [Node.js 10.15.2 x64](https://nodejs.org/dist/v10.15.2/node-v10.15.2-x64.msi)
 
 <a name="installation"></a>
 
@@ -73,6 +74,8 @@ To get started with the project you first must install Windows Server, then the 
    ![](screenshots/WindowsUpdateInitialSettings2.png)
 
 1. Reboot the server
+
+1. Install Visual Studio Express 2015 for Windows Desktop using the default options.
 
 <a name="the-mongodb-database-server"></a>
 
@@ -245,7 +248,7 @@ PORT = 80
 Open the NodeJS command line prompt as an Administrator and navigate to Nightscout folder, then run the Node Package Manager (NPM) installation process:
 
 ```
-npm install
+npm install --msvs_version=2015
 ```
 
 Once the installation process is complete start the server:

@@ -235,14 +235,16 @@ The next step is to install your environment variables at the system level, not 
    1. `ENABLE` explicitly calls out which features to enable for the user
    1. `API_SECRET` is required to be set to allow an uploader device use the REST API to add data to Nightscout (directly writing to MongoDB isn't supported)
    1. `MONGO` is the database connection string and is required for Nightscout to retrieve your data
-   1. `PORT` is the port the system will listen on, commonly 80 for HTTP
+   1. `PORT` is the port the system will listen on, commonly 80 for HTTP if you're going to put a reverse proxy in front of Nightscout, or 443 if not
+   1. `INSECURE_USE_HTTP` allows Node to use HTTP and not require HTTPS, which is only needed if you plan to put a reverse proxy in front of Nightscout (see the sections on IIS for details)
 
 ```
 PUMP_FIELDS = reservoir battery status
 ENABLE = careportal iob cob openaps pump bwg rawbg basal
 API_SECRET = YOUR_API_SECRET_HERE
 MONGO = mongodb://username:password@localhost:27017/Nightscout
-PORT = 80
+PORT = 443
+INSECURE_USE_HTTP = true
 ```
 
 Open the NodeJS command line prompt as an Administrator and navigate to Nightscout folder, then run the Node Package Manager (NPM) installation process:

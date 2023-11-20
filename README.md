@@ -30,21 +30,21 @@
 
 ## Goals and Thanks
 
-Most users don't have the infrastructure to run and maintain Nightscout at home in a way that's safe and accessible from the Internet. For those users [Azure](http://www.azure.com/) and [Hiroku](https://www.heroku.com/) are excellent resources. The goal of this walk through is to install a local instance of Nightscout on [Windows Server 2016](https://www.microsoft.com/en-us/cloud-platform/windows-server) and to run it when the server boots, even if a user doesn't log on. Further, because I already run a front-facing web server, I'll also detail how to setup a reverse proxy using [IIS](http://www.iis.net/) using my primary web server. The reverse proxy isn't required but documentation may help someone through a snag or two that I ran into.
+Most users don't have the infrastructure to run and maintain Nightscout at home in a way that's safe and accessible from the Internet. For those users [Azure](http://www.azure.com/) and [Hiroku](https://www.heroku.com/) are excellent resources. The goal of this walk through is to install a local instance of Nightscout on [Windows Server 2016, 2019, or 2202](https://www.microsoft.com/en-us/cloud-platform/windows-server) and to run it when the server boots, even if a user doesn't log on. Further, because I already run a front-facing web server, I'll also detail how to setup a reverse proxy using [IIS](http://www.iis.net/) using my primary web server. The reverse proxy isn't required but documentation may help someone through a snag or two that I ran into.
 
-Nightscout is still in development so there are some tricks needed because of dependencies on different open source libraries. I'd like to thank [@MilosKozak](https://gitter.im/MilosKozak), [@PieterGit](https://gitter.im/PieterGit), and the other users at [https://gitter.im/nightscout/public](https://gitter.im/nightscout/public) for the pointers they provided.
+Nightscout is still in development so there are some tricks needed because of dependencies on different open source libraries. I'd like to thank [@bewest](https://github.com/bewest), [@MilosKozak](https://github.com/MilosKozak), [@PieterGit](https://github.com/PieterGit), and the other users at [https://gitter.im/nightscout/public](https://gitter.im/nightscout/public) for the pointers they provided.
 
 <a name="tools-and-services"></a>
 
 # Tools and Services
 The following software was used to set up the local Nightscout server. All of the tools are free except for the Windows Server operating system.
 
-1. [Windows Server 2016](https://www.microsoft.com/en-us/cloud-platform/windows-server)
+1. [Windows Server 2016, 2019, or 2022](https://www.microsoft.com/en-us/cloud-platform/windows-server)
 1. [Visual Studio Express 2015 for Windows Desktop](https://my.visualstudio.com/Downloads?q=Visual%20Studio%20Express%202015%20for%20Windows%20Desktop)
-1. [MongoDB 4.0.0](https://www.mongodb.com/download-center?jmp=nav#community) for Windows Server 2008 R2 and later, with SSL support
+1. [MongoDB Community Server 4.4.25](https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-4.4.25-signed.msi)
 1. [Python 2.7.11](https://www.python.org/downloads/release/python-2711/)
-1. [Git for Windows 2.18.0](https://github.com/git-for-windows/git/releases/download/v2.18.0.windows.1/Git-2.18.0-64-bit.exe)
-1. [Node.js 10.15.2 x64](https://nodejs.org/dist/v10.15.2/node-v10.15.2-x64.msi)
+1. [Git for Windows 2.42.0](https://github.com/git-for-windows/git/releases/download/v2.42.0.windows.2/Git-2.42.0.2-64-bit.exe)
+1. [Node.js 16.20.2 x64](https://nodejs.org/download/release/v16.20.2/node-v16.20.2-x64.msi)
 
 <a name="installation"></a>
 
@@ -102,7 +102,7 @@ Once Mongo is installed the service is started automatically.
 Configuration involves creating the Nightscout database and assigning it credentials. You'll need this information and some information above to put together the connection string so Nightscout knows where to find the database.
 
 1. Open a new Administrator command prompt
-1. Open the Mongo client by running `C:\Program Files\MongoDB\Server\4.0\bin\mongo.exe`
+1. Open the Mongo client by running `C:\Program Files\MongoDB\Server\4.4\bin\mongo.exe`
 1. At the resulting `>` prompt create the `Nightscout` database:
 
       ```
@@ -139,11 +139,25 @@ mongodb://username:password@localhost:27017/Nightscout
 
    ![](screenshots/GitInstallOptions.png)
 
+   ![](screenshots/GitEditorOptions.png)
+
+   ![](screenshots/GitBranchNames.png)
+
+   ![](screenshots/GitSshOptions.png)
+
+   ![](screenshots/GitPullOptions.png)
+
    ![](screenshots/GitUnixOptions.png)
 
    ![](screenshots/GitCheckoutOptions.png)
 
+   ![](screenshots/GitTerminalEmulator.png)
+
+   ![](screenshots/GitCredentialHelper.png)
+
    ![](screenshots/GitCacheOptions.png)
+
+   ![](screenshots/GitExperimentalOptions.png)
 
 1. Install Python, making sure to add Python to the `PATH` environment variable:
 
@@ -314,7 +328,7 @@ The Task Scheduler must be used to start Nightscout when the system boots.
    - Run task as soon as possible after a scheduled start is missed
    - If the task fails, restart every (default is 1 minute)
    
-   *Important*: Uncheck the "Stop the task if it runs longer than" or your Nightscout server will fail three days after every reboot.
+   *Important*: Uncheck the "Stop the task if it runs longer than" or your Nightscout service will stop three days after every reboot.
 
    ![](screenshots/TaskSchedulerMongoSettings.png)
 
